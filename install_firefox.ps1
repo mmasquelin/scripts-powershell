@@ -2,7 +2,7 @@
 # URL: https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr
 
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
-$workdir = "$home\Downloads\"
+$workdir = "$env:TEMP"
 
 # Récupérer la dernière version du webbrowser
 

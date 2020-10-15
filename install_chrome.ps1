@@ -5,7 +5,6 @@
 $workdir = "$env:TEMP"
 
 # Récupérer la dernière version du webbrowser
-
 $source = "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi"
 $destination = "$workdir\googlechromestandaloneenterprise64.msi"
 
