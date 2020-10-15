@@ -1,6 +1,6 @@
 # Demo pour création d'un raccourci avec WinPS
 $sourceFileLocation = "$env:SystemRoot\System32\notepad.exe"
-$shortcutLocation = "C:\Users\PIT\Desktop\Notepad.lnk"
+$shortcutLocation = "$home\Desktop\Notepad.lnk"
 
 # New-Object : utilisé pour créer des objets .NET et COM
 # -ComObject WScript.Shell : créer un objet de type COM de type WScript.Shell pour appeler la méthode CreateShortCut
