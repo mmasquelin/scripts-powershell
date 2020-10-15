@@ -1,6 +1,6 @@
-# scripts-powershell
+# Scripts Windows PowerShell
 
-Collection de scripts Windows PowerShell
+Collection de scripts écrits avec Windows PowerShell
 
 ## Utilisation
 
