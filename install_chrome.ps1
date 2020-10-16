@@ -8,6 +8,13 @@ $workdir = "$env:TEMP"
 $source = "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi"
 $destination = "$workdir\googlechromestandaloneenterprise64.msi"
 
+# Arrête le script si l'utilisateur n'a pas le rôle d'administrateur
+$myCurrentUser = New-Object Security.Principal.WindowsPrincipal( [Security.Principal.WindowsIdentity]::GetCurrent() )
+if (-not $myCurrentUser.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator )) {
+    Write-Host "Merci de lancer ce script en tant qu'administrateur." -ForegroundColor Red
+    exit
+}
+
 # Test si le cmdlet Invoke-Webrequest existe 
 # A défaut, on utilise la classe WebClient
 if (Get-Command 'Invoke-Webrequest')

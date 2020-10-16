@@ -9,6 +9,13 @@ $workdir = "$env:TEMP"
 $source = "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr"
 $destination = "$workdir\firefox.exe"
 
+# Arrête le script si l'utilisateur n'a pas le rôle d'administrateur
+$myCurrentUser = New-Object Security.Principal.WindowsPrincipal( [Security.Principal.WindowsIdentity]::GetCurrent() )
+if (-not $myCurrentUser.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator )) {
+    Write-Host "Merci de lancer ce script en tant qu'administrateur." -ForegroundColor Red
+    exit
+}
+
 # Test si le cmdlet Invoke-Webrequest existe 
 # A défaut, on utilise la classe WebClient
 if (Get-Command 'Invoke-Webrequest')
