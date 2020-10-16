@@ -6,9 +6,14 @@ Write-Host 'Ce script va installer Google Chrome'
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
 $workdir = "$env:TEMP"
 
-# Récupérer la dernière version du webbrowser
-$source = "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi"
-$destination = "$workdir\googlechromestandaloneenterprise64.msi"
+# Récupérer la dernière version du webbrowser 
+# Fait en fonction du type d'OS (32/64 bits)
+if (!([Environment]::Is64BitOperatingSystem)) {
+    $source = "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise.msi"
+} else {
+    $source = "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi"
+}
+$destination = "$workdir\Chrome.msi"
 
 # Arrête le script si l'utilisateur n'a pas le rôle d'administrateur
 $myCurrentUser = New-Object Security.Principal.WindowsPrincipal( [Security.Principal.WindowsIdentity]::GetCurrent() )
@@ -40,8 +45,10 @@ foreach ($ProcToStop in $processesToStop){
     Get-process $ProcToStop -EA SilentlyContinue |Stop-Process -FOrce
 }
 
+$ChromeMSI = """$destination"""
+
 # Démarrer l'installation
-Start-Process -filepath msiexec -argumentlist "/i $destination /qn /norestart" -Wait -PassThru
+Start-Process -filepath msiexec -argumentlist "/i $ChromeMSI /qn /norestart" -Wait -PassThru
 
 $Process2Monitor =  "ChromeInstaller"; 
 Do { 
@@ -53,4 +60,4 @@ Do {
 } Until (!$ProcessesFound)
 
 # Supprimer le programme d'installation 
-rm -Force $workdir\ChromeInstaller*
+# rm -Force $workdir\Chrome*

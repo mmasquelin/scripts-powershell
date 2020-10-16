@@ -6,8 +6,13 @@ Write-Host 'Ce script va installer Mozilla Firefox ESR.'
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
 $workdir = "$env:TEMP"
 
-# Récupérer la dernière version du webbrowser
-$source = "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr"
+# Récupérer la dernière version du webbrowser 
+# Fait en fonction du type d'OS (32/64 bits)
+if (!([Environment]::Is64BitOperatingSystem)) {
+    $source = "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win&lang=fr"
+} else {
+    $source = "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr"
+}
 $destination = "$workdir\firefox.exe"
 
 # Arrête le script si l'utilisateur n'a pas le rôle d'administrateur
