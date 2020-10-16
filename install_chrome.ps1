@@ -41,14 +41,7 @@ foreach ($ProcToStop in $processesToStop){
 }
 
 # Démarrer l'installation
-Start-Process msiexec.exe -Wait -ArgumentList '/x $workdir\googlechromestandaloneenterprise64.msi /silent /install'
-
-# Attendre 35 secondes la fin de l'installation
-# Start-Sleep -s 35
-
-# Supprimer le programme d'installation
-# rm -Force $workdir\ChromeInstaller*
-
+Start-Process -filepath msiexec -argumentlist "/i $destination /qn /norestart" -Wait -PassThru
 
 $Process2Monitor =  "ChromeInstaller"; 
 Do { 
@@ -58,3 +51,6 @@ Do {
     else
     { rm -Force "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } 
 } Until (!$ProcessesFound)
+
+# Supprimer le programme d'installation 
+rm -Force $workdir\ChromeInstaller*
