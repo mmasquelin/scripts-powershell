@@ -11,7 +11,7 @@ $workdir = "$env:TEMP"
 
 # Récupérer le fichier user.js depuis le web
 if (Test-Connection raw.githubusercontent.com -Count 3 -Quiet) {
-    $source = "https://aw.githubusercontent.com/mmasquelin/scripts-powershell/browsers/extras/user.js"
+    $source = "https://raw.githubusercontent.com/mmasquelin/scripts-powershell/browsers/extras/user.js"
     $destination = "$workdir\user.js"
 
     # Test si le cmdlet Invoke-Webrequest existe 
