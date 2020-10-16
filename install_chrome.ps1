@@ -44,6 +44,7 @@ if (Test-Connection dl.google.com -Count 3 -Quiet) {
     Write-Host 'Echec. Impossible de joindre dl.google.com' -ForegroundColor Red
     exit
 }
+
 # Définir une liste des processus à tuer
 $processesToStop = @(
 "chrome*"
