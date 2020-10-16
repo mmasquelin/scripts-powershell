@@ -1,4 +1,4 @@
-# Installation silencieuse de Mozilla Firefox ESR (win64)
+# Installation silencieuse de Google Chrome (x64)
 # URL: https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi
 
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
@@ -12,7 +12,8 @@ $destination = "$workdir\googlechromestandaloneenterprise64.msi"
 # A défaut, on utilise la classe WebClient
 if (Get-Command 'Invoke-Webrequest')
 {
-     Invoke-WebRequest $source -OutFile $destination
+    $ProgressPreference = 'SilentlyContinue'
+    Invoke-WebRequest $source -OutFile $destination
 }
 else
 {

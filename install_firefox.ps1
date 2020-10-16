@@ -13,7 +13,8 @@ $destination = "$workdir\firefox.exe"
 # A défaut, on utilise la classe WebClient
 if (Get-Command 'Invoke-Webrequest')
 {
-     Invoke-WebRequest $source -OutFile $destination
+    $ProgressPreference = 'SilentlyContinue'
+    Invoke-WebRequest $source -OutFile $destination
 }
 else
 {
