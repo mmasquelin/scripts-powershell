@@ -2,6 +2,8 @@
 
 Collection de scripts écrits avec Windows PowerShell
 
+> Note : Le script `setup_google_chrome_homepage.ps1` s'exécute mais les modifications ne sont pas appliquées au profil Google Chrome de l'utilisateur. C'est donc à creuser ...
+
 ## Utilisation
 
 Par défaut, l'exécution des scripts Windows PowerShell n'est pas autorisée par Microsoft Windows 10. 
