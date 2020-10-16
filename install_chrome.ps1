@@ -1,6 +1,8 @@
 # Installation silencieuse de Google Chrome (x64)
 # URL: https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi
 
+Write-Host 'Ce script va installer Google Chrome'
+
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
 $workdir = "$env:TEMP"
 
@@ -26,6 +28,16 @@ else
 {
     $WebClient = New-Object System.Net.WebClient
     $webclient.DownloadFile($source, $destination)
+}
+
+# Définir une liste des processus à tuer
+$processesToStop = @(
+"chrome*"
+)
+
+# Arrêter les processus avant l'installation
+foreach ($ProcToStop in $processesToStop){
+    Get-process $ProcToStop -EA SilentlyContinue |Stop-Process -FOrce
 }
 
 # Démarrer l'installation

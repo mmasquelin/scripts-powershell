@@ -1,11 +1,12 @@
 # Installation silencieuse de Mozilla Firefox ESR (win64)
 # URL: https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr
 
+Write-Host 'Ce script va installer Mozilla Firefox ESR.'
+
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
 $workdir = "$env:TEMP"
 
 # Récupérer la dernière version du webbrowser
-
 $source = "https://download.mozilla.org/?product=firefox-esr-latest-ssl&os=win64&lang=fr"
 $destination = "$workdir\firefox.exe"
 
@@ -27,6 +28,16 @@ else
 {
     $WebClient = New-Object System.Net.WebClient
     $webclient.DownloadFile($source, $destination)
+}
+
+# Définir une liste des processus à tuer
+$processesToStop = @(
+"firefox*"
+)
+
+# Arrêter les processus avant l'installation
+foreach ($ProcToStop in $processesToStop){
+    Get-process $ProcToStop -EA SilentlyContinue |Stop-Process -FOrce
 }
 
 # Démarrer l'installation
