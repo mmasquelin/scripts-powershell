@@ -5,6 +5,7 @@ Write-Host 'Ce script va installer Google Chrome...'
 
 # Définition d'un répertoire de travail pour le téléchargement et l'installation
 $workdir = "$env:TEMP"
+$preferencesFileLocation = "https://raw.githubusercontent.com/mmasquelin/scripts-powershell/browsers/extras/master_preferences"
 
 # Récupérer la dernière version du webbrowser 
 # Fait en fonction du type d'OS (32/64 bits)
@@ -29,16 +30,21 @@ if (Test-Connection dl.google.com -Count 3 -Quiet) {
     {
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest $source -OutFile $destination
+        Invoke-WebRequest $preferencesFileLocation -OutFile "$workdir\master_preferences"
     }
     else
     {
         $WebClient = New-Object System.Net.WebClient
-        $webclient.DownloadFile($source, $destination)
+        $WebClient.DownloadFile($source, $destination)
+
+        $OthWebCli = New-Object System.Net.WebClient
+        $OthWebCli.DownloadFile($preferencesFileLocation, "$workdir\master_preferences")
     }
 } else {
     Write-Host 'Echec. Impossible de joindre dl.google.com' -ForegroundColor Red
     exit
 }
+
 # Définir une liste des processus à tuer
 $processesToStop = @(
 "chrome*"
@@ -63,5 +69,13 @@ Do {
     { rm -Force "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } 
 } Until (!$ProcessesFound)
 
-# Supprimer le programme d'installation 
-# rm -Force $workdir\Chrome*
+Write-Host 'Configuration accueil du navigateur...'
+If ((Test-Path "C:\Program Files\Google\Chrome\Application\chrome.exe") -eq $True) {
+    Copy-Item -Path "$workdir\master_preferences" -Destination "C:\Program Files\Google\Chrome\Application\"
+} else {
+    Copy-Item -Path "$workdir\master_preferences" -Destination "C:\Program Files (x86)\Google\Chrome\Application\"
+}
+
+# Supprimer le programme d'installation et les préférences
+rm -Force $workdir\Chrome*
+rm -Force $workdir\master_preferences
